@@ -38,9 +38,6 @@ importers:
       graphql:
         specifier: ^16.8.1
         version: 16.11.0
-      lexical:
-        specifier: ^0.30.0
-        version: 0.30.0
       next:
         specifier: 15.3.0
         version: 15.3.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4)
