@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import type { Metadata } from 'next'
-import React, { cache } from 'react'
-import type { Page as PageType } from '../../../payload-types'
+// import type { Metadata } from 'next'
+import React from 'react'
+// import type { Page as PageType } from '../../../payload-types'
 import { RenderBlocks } from '@/utils/RenderBlocks'
 
 export default async function Page({ params }: { params: { slug: string } }) {
