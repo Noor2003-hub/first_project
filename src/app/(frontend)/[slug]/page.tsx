@@ -1,15 +1,9 @@
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
-
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { RenderBlocks } from '@/utils/RenderBlocks'
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: { params: { slug: string } }) {
   const slug = decodeURIComponent(params.slug || 'index')
 
   const payload = await getPayload({ config })
