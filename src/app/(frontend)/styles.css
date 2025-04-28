@@ -1,3 +1,6 @@
+/* @import "tailwindcss"; */
+
+/* this is the style of payload */
 :root {
   --font-mono: 'Roboto Mono', monospace;
 }

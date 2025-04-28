@@ -1,0 +1,8 @@
+
+@import "tailwindcss";
+/* this is style of website */
+.richText{
+    h1{
+        @apply text-red-500
+    }
+}
