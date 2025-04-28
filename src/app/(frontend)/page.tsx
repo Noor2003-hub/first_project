@@ -1,5 +1,36 @@
-import PageTempelate from './[slug]/page'
-export default PageTempelate
+import { notFound } from 'next/navigation'
+import { getPayload } from 'payload'
+import config from '@payload-config'
+// import type { Metadata } from 'next'
+import React from 'react'
+// import type { Page as PageType } from '../../../payload-types'
+import { RenderBlocks } from '@/utils/RenderBlocks'
+
+export default async function Page({ params }: { params: { slug: string } }) {
+  const slug = decodeURIComponent(params.slug || 'index')
+
+  const payload = await getPayload({ config })
+
+  const { docs } = await payload.find({
+    collection: 'pages',
+    limit: 1,
+    where: { slug: { equals: slug } },
+  })
+
+  const page = docs[0]
+
+  if (!page) {
+    return notFound()
+  }
+
+  return (
+    <article className="pt-16 pb-24">
+      <RenderBlocks blocks={page.layout} />
+      {/* Render more page content here if needed */}
+    </article>
+  )
+}
+
 
 
 // import { headers as getHeaders } from 'next/headers.js'
