@@ -1,13 +1,13 @@
+interface PageProps {
+  params: {
+    slug: string;
+  };
+}
+
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { RenderBlocks } from '@/utils/RenderBlocks'
-
-interface PageProps {
-  params: {
-    slug: string
-  }
-}
 
 export default async function Page({ params }: PageProps) {
   const slug = decodeURIComponent(params.slug || 'index')
