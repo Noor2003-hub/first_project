@@ -3,7 +3,13 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { RenderBlocks } from '@/utils/RenderBlocks'
 
-export default async function Page({ params }: { params: { slug: string } }) {
+interface PageProps {
+  params: {
+    slug: string
+  }
+}
+
+export default async function Page({ params }: PageProps) {
   const slug = decodeURIComponent(params.slug || 'index')
 
   const payload = await getPayload({ config })
@@ -23,7 +29,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <article className="pt-16 pb-24">
       <RenderBlocks blocks={page.layout} />
-      {/* Render more page content here if needed */}
     </article>
   )
 }
