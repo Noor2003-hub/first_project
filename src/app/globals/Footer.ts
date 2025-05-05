@@ -1,4 +1,5 @@
 import {GlobalConfig} from "payload"
+import {beforeValidateHook} from "./hooks/index"
 export const Footer: GlobalConfig={
     slug:'footer',
     fields:[
@@ -34,5 +35,8 @@ export const Footer: GlobalConfig={
             required:true
             
         },
-    ]
+    ],
+    hooks:{
+        beforeValidate:[beforeValidateHook]
+    }
 }

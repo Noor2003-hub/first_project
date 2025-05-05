@@ -6,7 +6,7 @@ import { Page } from '@/payload-types'
 import React, { Fragment } from 'react'
 
 
-
+console.log('here!')
 const blockComponents = {
  cover:CoverBlockServer,
  image:ImageServer,
@@ -19,6 +19,7 @@ export const RenderBlocks: React.FC<{
   const { blocks } = props
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
+  console.log("Rendering blocks:", blocks);
 
   if (hasBlocks) {
     return (

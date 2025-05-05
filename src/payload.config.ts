@@ -10,6 +10,8 @@ import { s3Storage } from '@payloadcms/storage-s3'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+
+import { ExampleCollection } from './collections/ExampleCollection'
 import { Pages } from './collections/Pages'
 import { Footer } from './app/globals/Footer'
 import { Header } from './app/globals/Header'
@@ -24,7 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media,Pages],
+  collections: [Users, Media,Pages,ExampleCollection],
   globals:[
     Header,Footer,
   ],
@@ -57,5 +59,12 @@ export default buildConfig({
       }
     })
   ],
+  hooks:
+    {afterError:[
+      (err)=>{
+        console.log('from config!!=',err)
+      }
+    ]}
+  
 })
 

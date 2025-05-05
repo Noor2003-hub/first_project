@@ -2,6 +2,7 @@ import { Cover } from '@/app/blocks/cover/schema';
 import { RichText } from '@/app/blocks/richText/schema';
 import { Image } from '@/app/blocks/image/schema';
 import type { CollectionConfig } from 'payload';
+import { afterChangeeHook } from './fieldHooks';
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -33,6 +34,18 @@ export const Pages: CollectionConfig = {
           ],
           required:true
         },
+        {
+            name:'textarea',
+            type:"textarea",
+            hooks:{
+               beforeValidate:[],
+               beforeChange:[],
+               afterChange:[afterChangeeHook],
+               afterRead:[],
+               beforeDuplicate:[]
+
+            }
+        }
       ],}
             
         
