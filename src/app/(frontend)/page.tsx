@@ -2,7 +2,7 @@ import config from '@payload-config'
 import { getPayload } from 'payload'
 import React, { cache } from 'react'
 
-import { RenderBlocks } from '@/utils/RenderBlocks'
+import { RenderBlocks } from '@/app/utils/RenderBlocks'
 import { notFound } from 'next/navigation'
 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
@@ -30,9 +30,7 @@ export async function generateStaticParams() {
     limit: 1000,
   })
 
-  return pages.docs
-    ?.filter((doc) => doc.slug !== 'index')
-    .map(({ slug }) => slug)
+  return pages.docs?.filter((doc) => doc.slug !== 'index').map(({ slug }) => slug)
 }
 
 export default async function Page({ params: { slug = 'index' } }: { params: { slug: string } }) {
@@ -44,6 +42,7 @@ export default async function Page({ params: { slug = 'index' } }: { params: { s
 
   return (
     <article className="pt-16 pb-24">
+      <h1 className='bg-red-500'>Hii</h1>
       <RenderBlocks blocks={page.layout} />
     </article>
   )

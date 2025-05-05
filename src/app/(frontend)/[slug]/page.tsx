@@ -73,24 +73,21 @@
 //   )
 // }
 
-
-
-
 //UP is SSG, down is SSR:
 
 import config from '@payload-config'
 import { getPayload } from 'payload'
 import React, { cache } from 'react'
-import Button from '@mui/material/Button';
+import Button from '@mui/material/Button'
 // import { Button } from "@/components/ui/button"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from '@/components/ui/accordion'
 
-import { RenderBlocks } from '@/utils/RenderBlocks'
+import { RenderBlocks } from '@/app/utils/RenderBlocks'
 import { notFound } from 'next/navigation'
 console.log('hena!')
 const queryPageBySlug = async ({ slug }: { slug: string }) => {
@@ -113,7 +110,6 @@ const queryPageBySlug = async ({ slug }: { slug: string }) => {
   return result.docs?.[0] || null
 }
 
-
 export default async function Page({ params: { slug = 'index' } }) {
   console.log('Rendering Page with slug:', slug)
   const page = await queryPageBySlug({ slug })
@@ -121,19 +117,18 @@ export default async function Page({ params: { slug = 'index' } }) {
 
   return (
     <article data-theme="synthwave" className="pt-16 pb-24">
-      <Button variant="contained" palette="dark" className="btn">Click me</Button>
-      <span >This span will always use retro theme!</span>
+      <Button variant="contained" palette="dark" className="btn">
+        Click me
+      </Button>
+      <span>This span will always use retro theme!</span>
       <Accordion type="single" collapsible className="w-full">
-  <AccordionItem value="item-1">
-    <AccordionTrigger>Is it accessible?</AccordionTrigger>
-    <AccordionContent>
-      Yes. It adheres to the WAI-ARIA design pattern.
-    </AccordionContent>
-  </AccordionItem>
-</Accordion>
+        <AccordionItem value="item-1">
+          <AccordionTrigger>Is it accessible?</AccordionTrigger>
+          <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
       <RenderBlocks blocks={page.layout ?? []} />
     </article>
   )
 }
-
