@@ -7,6 +7,17 @@
  */
 
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Meta".
+ */
+export type Meta =
+  | {
+      title: string;
+      description: string;
+      id?: string | null;
+    }[]
+  | null;
+/**
  * Supported timezones in IANA format.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -64,12 +75,26 @@ export type SupportedTimezones =
 export interface Config {
   auth: {
     users: UserAuthOperations;
+    customers: CustomerAuthOperations;
   };
   blocks: {};
   collections: {
     users: User;
     media: Media;
     pages: Page;
+    'example-collection': ExampleCollection;
+    products: Product;
+    orders: Order;
+    categories: Category;
+    subcategories: Subcategory;
+    customers: Customer;
+    brands: Brand;
+    reviews: Review;
+    styles: Style;
+    colors: Color;
+    sizes: Size;
+    attributes: Attribute;
+    attributeOptions: AttributeOption;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -79,6 +104,19 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    'example-collection': ExampleCollectionSelect<false> | ExampleCollectionSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
+    orders: OrdersSelect<false> | OrdersSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    subcategories: SubcategoriesSelect<false> | SubcategoriesSelect<true>;
+    customers: CustomersSelect<false> | CustomersSelect<true>;
+    brands: BrandsSelect<false> | BrandsSelect<true>;
+    reviews: ReviewsSelect<false> | ReviewsSelect<true>;
+    styles: StylesSelect<false> | StylesSelect<true>;
+    colors: ColorsSelect<false> | ColorsSelect<true>;
+    sizes: SizesSelect<false> | SizesSelect<true>;
+    attributes: AttributesSelect<false> | AttributesSelect<true>;
+    attributeOptions: AttributeOptionsSelect<false> | AttributeOptionsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -95,9 +133,13 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
-  user: User & {
-    collection: 'users';
-  };
+  user:
+    | (User & {
+        collection: 'users';
+      })
+    | (Customer & {
+        collection: 'customers';
+      });
   jobs: {
     tasks: unknown;
     workflows: unknown;
@@ -121,12 +163,31 @@ export interface UserAuthOperations {
     password: string;
   };
 }
+export interface CustomerAuthOperations {
+  forgotPassword: {
+    email: string;
+    password: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
+    password: string;
+  };
+}
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
   id: string;
+  role: 'admin' | 'user';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -166,43 +227,318 @@ export interface Page {
   id: string;
   name: string;
   slug: string;
-  layout?:
+  sections?:
     | (
         | {
-            title: string;
-            subtitle: string;
+            layouts?:
+              | (
+                  | {
+                      content: {
+                        root: {
+                          type: string;
+                          children: {
+                            type: string;
+                            version: number;
+                            [k: string]: unknown;
+                          }[];
+                          direction: ('ltr' | 'rtl') | null;
+                          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                          indent: number;
+                          version: number;
+                        };
+                        [k: string]: unknown;
+                      };
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'richText';
+                    }
+                  | {
+                      img: string | Media;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'image';
+                    }
+                )[]
+              | null;
+            records?:
+              | {
+                  title?: string | null;
+                  record?: number | null;
+                  id?: string | null;
+                }[]
+              | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'cover';
+            blockType: 'hero';
           }
         | {
-            content: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            };
+            title?: string | null;
+            products?: (string | Product)[] | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'richText';
+            blockType: 'productsSection';
           }
         | {
-            img: string | Media;
+            title?: string | null;
+            styles?: (string | Style)[] | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'image';
+            blockType: 'stylesSection';
+          }
+        | {
+            title?: string | null;
+            comments?: (string | Review)[] | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'commentsSection';
+          }
+        | {
+            heading: string;
+            placeholderText?: string | null;
+            buttonLabel?: string | null;
+            /**
+             * Tailwind class or HEX color
+             */
+            backgroundColor?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'newsletter';
+          }
+        | {
+            topBrands?: (string | Brand)[] | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'topBrands';
           }
       )[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: string;
+  title: string;
+  Description?: string | null;
+  brand?: (string | null) | Brand;
+  category: (string | Category)[];
+  averageRating?: number | null;
+  price: number;
+  onsale?: boolean | null;
+  discountPercentage?: number | null;
+  discountedPrice?: number | null;
+  salesCount?: number | null;
+  attributes?:
+    | {
+        attribute: string | Attribute;
+        options: (string | AttributeOption)[];
+        id?: string | null;
+      }[]
+    | null;
+  stock?:
+    | {
+        color: string | Color;
+        size: string | Size;
+        quantity: number;
+        id?: string | null;
+      }[]
+    | null;
+  isNewArrival?: boolean | null;
+  isTopSeller?: boolean | null;
+  images?:
+    | {
+        image: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "brands".
+ */
+export interface Brand {
+  id: string;
+  name?: string | null;
+  logo?: (string | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  title: string;
+  parentCategory?: (string | Category)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export interface Attribute {
+  id: string;
+  name: string;
+  options?: (string | AttributeOption)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "attributeOptions".
+ */
+export interface AttributeOption {
+  id: string;
+  attribute: string | Attribute;
+  label: string;
+  extraFields?:
+    | {
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "colors".
+ */
+export interface Color {
+  id: string;
+  colorName?: string | null;
+  code?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sizes".
+ */
+export interface Size {
+  id: string;
+  size: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "styles".
+ */
+export interface Style {
+  id: string;
+  name?: string | null;
+  cover?: (string | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: string;
+  product: string | Product;
+  userName?: (string | null) | Customer;
+  rating: number;
+  comment: string;
+  postedDate: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customers".
+ */
+export interface Customer {
+  id: string;
+  name?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "example-collection".
+ */
+export interface ExampleCollection {
+  id: string;
+  backgroundImage: string | Media;
+  purchase?:
+    | ({
+        relationTo: 'users';
+        value: string | User;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null);
+  title: string;
+  someTextField: string;
+  color?: ('mint' | 'dark_gray') | null;
+  age: number;
+  pageMeta?: Meta;
+  contact: string;
+  dateOnly?: string | null;
+  timeOnly?: string | null;
+  monthOnly?: string | null;
+  trackingCode: string;
+  enableCoolStuff?: boolean | null;
+  layout?: QuoteBlock[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuoteBlock".
+ */
+export interface QuoteBlock {
+  quoteHeader: string;
+  quoteText?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'Quote';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: string;
+  customer: string | Customer;
+  status: 'pending' | 'paid' | 'shipped' | 'cancelled';
+  items: {
+    product: string | Product;
+    color: string;
+    size: string;
+    quantity: number;
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subcategories".
+ */
+export interface Subcategory {
+  id: string;
+  title: string;
+  category?: (string | null) | Category;
   updatedAt: string;
   createdAt: string;
 }
@@ -224,12 +560,69 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'example-collection';
+        value: string | ExampleCollection;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: string | Product;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: string | Order;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'subcategories';
+        value: string | Subcategory;
+      } | null)
+    | ({
+        relationTo: 'customers';
+        value: string | Customer;
+      } | null)
+    | ({
+        relationTo: 'brands';
+        value: string | Brand;
+      } | null)
+    | ({
+        relationTo: 'reviews';
+        value: string | Review;
+      } | null)
+    | ({
+        relationTo: 'styles';
+        value: string | Style;
+      } | null)
+    | ({
+        relationTo: 'colors';
+        value: string | Color;
+      } | null)
+    | ({
+        relationTo: 'sizes';
+        value: string | Size;
+      } | null)
+    | ({
+        relationTo: 'attributes';
+        value: string | Attribute;
+      } | null)
+    | ({
+        relationTo: 'attributeOptions';
+        value: string | AttributeOption;
       } | null);
   globalSlug?: string | null;
-  user: {
-    relationTo: 'users';
-    value: string | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: string | User;
+      }
+    | {
+        relationTo: 'customers';
+        value: string | Customer;
+      };
   updatedAt: string;
   createdAt: string;
 }
@@ -239,10 +632,15 @@ export interface PayloadLockedDocument {
  */
 export interface PayloadPreference {
   id: string;
-  user: {
-    relationTo: 'users';
-    value: string | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: string | User;
+      }
+    | {
+        relationTo: 'customers';
+        value: string | Customer;
+      };
   key?: string | null;
   value?:
     | {
@@ -272,6 +670,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -308,31 +707,300 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PagesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  layout?:
+  sections?:
     | T
     | {
-        cover?:
+        hero?:
+          | T
+          | {
+              layouts?:
+                | T
+                | {
+                    richText?:
+                      | T
+                      | {
+                          content?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    image?:
+                      | T
+                      | {
+                          img?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              records?:
+                | T
+                | {
+                    title?: T;
+                    record?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        productsSection?:
           | T
           | {
               title?: T;
-              subtitle?: T;
+              products?: T;
               id?: T;
               blockName?: T;
             };
-        richText?:
+        stylesSection?:
           | T
           | {
-              content?: T;
+              title?: T;
+              styles?: T;
               id?: T;
               blockName?: T;
             };
-        image?:
+        commentsSection?:
           | T
           | {
-              img?: T;
+              title?: T;
+              comments?: T;
               id?: T;
               blockName?: T;
             };
+        newsletter?:
+          | T
+          | {
+              heading?: T;
+              placeholderText?: T;
+              buttonLabel?: T;
+              backgroundColor?: T;
+              id?: T;
+              blockName?: T;
+            };
+        topBrands?:
+          | T
+          | {
+              topBrands?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "example-collection_select".
+ */
+export interface ExampleCollectionSelect<T extends boolean = true> {
+  backgroundImage?: T;
+  purchase?: T;
+  title?: T;
+  someTextField?: T;
+  color?: T;
+  age?: T;
+  pageMeta?: T | MetaSelect<T>;
+  contact?: T;
+  dateOnly?: T;
+  timeOnly?: T;
+  monthOnly?: T;
+  trackingCode?: T;
+  enableCoolStuff?: T;
+  layout?:
+    | T
+    | {
+        Quote?: T | QuoteBlockSelect<T>;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Meta_select".
+ */
+export interface MetaSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  id?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuoteBlock_select".
+ */
+export interface QuoteBlockSelect<T extends boolean = true> {
+  quoteHeader?: T;
+  quoteText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  title?: T;
+  Description?: T;
+  brand?: T;
+  category?: T;
+  averageRating?: T;
+  price?: T;
+  onsale?: T;
+  discountPercentage?: T;
+  discountedPrice?: T;
+  salesCount?: T;
+  attributes?:
+    | T
+    | {
+        attribute?: T;
+        options?: T;
+        id?: T;
+      };
+  stock?:
+    | T
+    | {
+        color?: T;
+        size?: T;
+        quantity?: T;
+        id?: T;
+      };
+  isNewArrival?: T;
+  isTopSeller?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders_select".
+ */
+export interface OrdersSelect<T extends boolean = true> {
+  customer?: T;
+  status?: T;
+  items?:
+    | T
+    | {
+        product?: T;
+        color?: T;
+        size?: T;
+        quantity?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  title?: T;
+  parentCategory?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subcategories_select".
+ */
+export interface SubcategoriesSelect<T extends boolean = true> {
+  title?: T;
+  category?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customers_select".
+ */
+export interface CustomersSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "brands_select".
+ */
+export interface BrandsSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews_select".
+ */
+export interface ReviewsSelect<T extends boolean = true> {
+  product?: T;
+  userName?: T;
+  rating?: T;
+  comment?: T;
+  postedDate?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "styles_select".
+ */
+export interface StylesSelect<T extends boolean = true> {
+  name?: T;
+  cover?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "colors_select".
+ */
+export interface ColorsSelect<T extends boolean = true> {
+  colorName?: T;
+  code?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sizes_select".
+ */
+export interface SizesSelect<T extends boolean = true> {
+  size?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "attributes_select".
+ */
+export interface AttributesSelect<T extends boolean = true> {
+  name?: T;
+  options?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "attributeOptions_select".
+ */
+export interface AttributeOptionsSelect<T extends boolean = true> {
+  attribute?: T;
+  label?: T;
+  extraFields?:
+    | T
+    | {
+        value?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -381,6 +1049,13 @@ export interface Header {
     link?: string | null;
     id?: string | null;
   }[];
+  icons?:
+    | {
+        icon: string | Media;
+        link?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -390,15 +1065,39 @@ export interface Header {
  */
 export interface Footer {
   id: string;
-  logo: string | Media;
-  nav?:
+  aboutSection: {
+    logo: string | Media;
+    description?: string | null;
+    socialLinks?:
+      | {
+          platform?: string | null;
+          url?: string | null;
+          icon: string | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  linkSections?:
     | {
-        label?: string | null;
-        link?: string | null;
+        heading?: string | null;
+        links?:
+          | {
+              label?: string | null;
+              url?: string | null;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
-  copyrightNotice: string;
+  bottomNote?: string | null;
+  paymentIcons?:
+    | {
+        image?: (string | null) | Media;
+        altText?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -415,6 +1114,13 @@ export interface HeaderSelect<T extends boolean = true> {
         link?: T;
         id?: T;
       };
+  icons?:
+    | T
+    | {
+        icon?: T;
+        link?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -424,15 +1130,41 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  logo?: T;
-  nav?:
+  aboutSection?:
     | T
     | {
-        label?: T;
-        link?: T;
+        logo?: T;
+        description?: T;
+        socialLinks?:
+          | T
+          | {
+              platform?: T;
+              url?: T;
+              icon?: T;
+              id?: T;
+            };
+      };
+  linkSections?:
+    | T
+    | {
+        heading?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              id?: T;
+            };
         id?: T;
       };
-  copyrightNotice?: T;
+  bottomNote?: T;
+  paymentIcons?:
+    | T
+    | {
+        image?: T;
+        altText?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

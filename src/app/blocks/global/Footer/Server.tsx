@@ -1,42 +1,83 @@
+// components/global/Footer.tsx
 import React from 'react';
 import config from '@payload-config';
 import { getPayload } from 'payload';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default async function FooterServer() {
+export default async function Footer() {
   const payload = await getPayload({ config });
-  const footer = await payload.findGlobal({
-    slug: 'footer'
-  });
+  const footer = await payload.findGlobal({ slug: 'footer' });
 
   return (
-    <header className="bg-blue-400 border-t-blue-600 py-6">
-      <div className="max-w-6xl mx-auto flex items-center justify-between px-6">
-        {/* Left side: Logo */}
-        <div className="flex items-center space-x-4">
-          <div className="relative w-30 h-30">
-            <Image src={footer.logo.url} alt={footer.logo.alt} fill className="object-contain" />
-          </div>
-          
-        </div>
-        <nav className=' text-lg hover:underline'>
-            {footer.copyrightNotice}
-        </nav>
+    <footer className="bg-[#F0F0F0] pt-16 px-6">
+      <div className="max-w-6xl mx-auto space-y-12">
 
-        {/* Right side: Nav */}
-        <nav className="flex space-x-8">
-          {footer.nav.map((item, index) => (
-            <Link
-              key={index}
-              href={item.link}
-              className="text-white text-lg hover:underline"
-            >
-              {item.label}
-            </Link>
+        {/* Top Section */}
+        <div className="grid md:grid-cols-5 gap-8">
+          {/* Logo + Description + Socials */}
+          <div className="space-y-4 col-span-2">
+            <div className='w-full'>
+              
+            </div>
+            {footer.aboutSection.logo?.url && (
+                        <div className="relative w-50 h-10 ">
+                          <Image
+                            src={footer.aboutSection.logo.url}
+                            alt={footer.aboutSection.logo.alt || 'Logo'}
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                      )}
+            <p className="text-sm text-gray-600">{footer.aboutSection.description}</p>
+            
+            <div className="flex flex-row space-x-4">
+              {footer.aboutSection.socialLinks?.map((link, index) => (
+                <div key={index} className="relative w-10 h-6">
+                <Image
+                  src={link.icon.url}
+                  alt={link.icon.alt || 'Social icon'}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Link Sections */}
+          {footer.linkSections?.map((section, i) => (
+            <div key={i}>
+              <h4 className="font-semibold mb-2">{section.heading}</h4>
+              <ul className="space-y-2 text-sm text-gray-700">
+                {section.links.map((link, j) => (
+                  <li key={j}>
+                    <Link href={link.url||'/'}>{link.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </nav>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-300 text-sm text-gray-600 space-y-4 md:space-y-0">
+          <p>{footer.bottomNote}</p>
+          <div className="flex space-x-2">
+            {footer.paymentIcons?.map((icon, i) => (
+              <div key={i} className="relative w-10 h-6">
+                <Image
+                  src={icon.image.url}
+                  alt={icon.altText || 'Payment icon'}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-    </header>
+    </footer>
   );
 }

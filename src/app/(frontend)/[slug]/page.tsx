@@ -116,8 +116,8 @@ export default async function Page({ params: { slug = 'index' } }) {
   console.log('Loaded page:', page)
 
   return (
-    <article data-theme="synthwave" className="pt-16 pb-24">
-      <Button variant="contained" palette="dark" className="btn">
+    <article data-theme="dark" className="pt-16 pb-24">
+      <Button  className="btn">
         Click me
       </Button>
       <span>This span will always use retro theme!</span>

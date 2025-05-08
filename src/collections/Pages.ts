@@ -2,10 +2,19 @@ import { Cover } from '@/app/blocks/cover/schema';
 import { RichText } from '@/app/blocks/richText/schema';
 import { Image } from '@/app/blocks/image/schema';
 import type { CollectionConfig } from 'payload';
-import { afterChangeeHook } from './fieldHooks';
+import { afterChangeHook } from './fieldHooks';
+import { Hero } from '@/app/blocks/hero/schema';
+import { ProductsSection } from '@/app/blocks/productsSection/schema';
+import { StylesSection } from '@/app/blocks/stylesSection/schema';
+import { CommentsSection } from '@/app/blocks/commentsSection/schema';
+import { Newsletter } from '@/app/blocks/newsletter/schema';
+import { TopBrands } from '@/app/blocks/topBrands/schema';
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  admin: {
+    useAsTitle: 'name',
+  },
   fields: [
         {
             name:'name',
@@ -23,29 +32,22 @@ export const Pages: CollectionConfig = {
             },
             required:true
         },
-        {
-            name:'layout',
+        
+        
+        
+          {
+            name:'sections',
             type:'blocks',
-            label:'Layout',
-            blocks:[
-                Cover,
-                RichText,
-                Image
-          ],
-          required:true
-        },
-        {
-            name:'textarea',
-            type:"textarea",
-            hooks:{
-               beforeValidate:[],
-               beforeChange:[],
-               afterChange:[afterChangeeHook],
-               afterRead:[],
-               beforeDuplicate:[]
-
-            }
-        }
+            blocks:
+              [Hero,
+                ProductsSection,
+                StylesSection,
+                CommentsSection,
+                Newsletter,
+                TopBrands
+              ]}
+            
+        
       ],}
             
         

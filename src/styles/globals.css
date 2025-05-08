@@ -5,6 +5,7 @@
   themes: all;
 }
 
+
 @custom-variant dark (&:is(.dark *));
 /* this is style of website */
 .richText{
@@ -12,6 +13,30 @@
         @apply text-red-500
     }
 }
+.grid-container {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 bg-[#F0F0F0] rounded-4xl p-4;
+}
+
+.grid-container > div {
+  @apply bg-white rounded-xl text-left p-4 text-2xl;
+}
+
+.item2 {
+  grid-column-start: 2;
+  grid-column-end: 4;
+}
+.item3 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
+}
+
 .slider-container {
     display: flex;
     overflow-x: auto;

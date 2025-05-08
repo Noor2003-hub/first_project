@@ -26,6 +26,24 @@ export const Header: GlobalConfig={
             }
             ],
             required:true
-        }
+        },
+        {
+            name:'icons',
+            label:'Icons',
+            type:'array',
+            fields:[
+                {
+                    name:'icon',
+                    label:'Icon',
+                    type:'upload',
+                    relationTo:'media',
+                    required:true
+                }
+                ,{
+                    name:'link',
+                    label:'Link',
+                    type:'text'
+                },
+            ]}
     ]
 }

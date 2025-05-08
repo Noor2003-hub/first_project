@@ -1,9 +1,12 @@
 import config from '@payload-config'
 import { getPayload } from 'payload'
 import React, { cache } from 'react'
+import Link from 'next/link';
 
 import { RenderBlocks } from '@/app/utils/RenderBlocks'
 import { notFound } from 'next/navigation'
+import CardsContainer from './components/CardsContainer'
+import ButtonCustom from './components/ButtonCustom';
 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   const parsedSlug = decodeURIComponent(slug)
@@ -39,11 +42,11 @@ export default async function Page({ params: { slug = 'index' } }: { params: { s
   if (!page) {
     return notFound()
   }
-
+  console.log('brands==',page.sections[6])
   return (
-    <article className="pt-16 pb-24">
-      <h1 className='bg-red-500'>Hii</h1>
-      <RenderBlocks blocks={page.layout} />
-    </article>
+    <>
+      <RenderBlocks blocks={page.sections} />
+
+    </>
   )
 }

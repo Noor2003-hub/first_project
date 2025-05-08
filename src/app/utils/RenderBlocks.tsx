@@ -4,45 +4,61 @@ import RichTextServer from '@/app/blocks/richText/Server'
 
 import { Page } from '@/payload-types'
 import React, { Fragment } from 'react'
+import HeroServer from '../blocks/hero/Server'
+import ProductsSectionServer from '../blocks/productsSection/Server'
+import StylesSectionServer from '../blocks/stylesSection/Server'
+import CommentsSectionServer from '../blocks/commentsSection/Server'
+import { Newsletter } from '../blocks/newsletter/schema'
+import NewsletterServer from '../blocks/newsletter/Server'
+import { TopBrands } from '../blocks/topBrands/schema'
+import TopBrandsServer from '../blocks/topBrands/Server'
 
-
-console.log('here!')
 const blockComponents = {
- cover:CoverBlockServer,
- image:ImageServer,
- richText:RichTextServer
+  cover: CoverBlockServer,
+  image: ImageServer,
+  richText: RichTextServer,
+  hero: HeroServer,
+  productsSection: ProductsSectionServer,
+  stylesSection: StylesSectionServer,
+  commentsSection: CommentsSectionServer,
+  newsletter:NewsletterServer,
+  topBrands:TopBrandsServer
 }
 
 export const RenderBlocks: React.FC<{
-  blocks: Page['layout'][0][]
-}> = (props) => {
-  const { blocks } = props
+  blocks?: Page['sections'][0][],
+  // productBlocks?: Page['productsSection'][0][],
+  // stylesBlocks?: Page['stylesSection'][0][],
+  // commentsBlocks?: Page['commentsSection'][0][]
+  // newsletter?: Page['newsLetter'][0][],
 
-  const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
-  console.log("Rendering blocks:", blocks);
+}> = ({ blocks = [], 
+  // productBlocks = [], stylesBlocks = [], commentsBlocks = [],newsletter=[] 
+}) => {
 
-  if (hasBlocks) {
-    return (
-      <Fragment>
-        {blocks.map((block, index) => {
-          const { blockName, blockType } = block
+  const allBlocks = [...blocks,
+    //  ...productBlocks, ...stylesBlocks, ...commentsBlocks,...newsletter
+    ]
+  const hasBlocks = allBlocks.length > 0
 
-          if (blockType && blockType in blockComponents) {
-            const Block = blockComponents[blockType]
+  if (!hasBlocks) return null
 
-            if (Block) {
-              return (
-                <div className="my-16" key={index}>
-                  <Block id={blockName} {...block} />
-                </div>
-              )
-            }
-          }
-          return null
-        })}
-      </Fragment>
-    )
-  }
+  return (
+    <Fragment>
+      {allBlocks.map((block, index) => {
+        const { blockName, blockType } = block
 
-  return null
+        if (blockType && blockType in blockComponents) {
+          const Block = blockComponents[blockType]
+          return (
+            <div key={index}>
+              <Block id={blockName} {...block} />
+            </div>
+          )
+        }
+
+        return null
+      })}
+    </Fragment>
+  )
 }
