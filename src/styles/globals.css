@@ -4,6 +4,18 @@
 @plugin "daisyui"{
   themes: all;
 }
+@layer utilities {
+  .mask-horizontal-fade {
+    mask-image: linear-gradient(to right, black 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 0%, transparent 100%);
+  }
+
+  .mask-horizontal-fade-right {
+    mask-image: linear-gradient(to right, transparent 0%, black 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 100%);
+  }
+}
+
 
 
 @custom-variant dark (&:is(.dark *));

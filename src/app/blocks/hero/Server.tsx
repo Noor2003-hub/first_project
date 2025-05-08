@@ -56,7 +56,7 @@ const HeroServer: React.FC<HeroProps> = ({ layouts, records }) => {
         })}
       </div>
 
-      <div>
+      <div className="w-full md:w-1/4">
         <ButtonCustom title="Shop Now" href="/shop" theme="dark" />
       </div>
 

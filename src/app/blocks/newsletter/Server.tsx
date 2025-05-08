@@ -1,3 +1,5 @@
+import ButtonCustom from '@/app/(frontend)/components/ButtonCustom';
+import CustomInput from '@/app/(frontend)/components/CustomInput';
 import React from 'react';
 
 type Props = {
@@ -16,24 +18,22 @@ const NewsletterCTAServer: React.FC<Props> = ({
   console.log('Newsletter block props:', { heading, placeholderText, buttonLabel, backgroundColor });
 
   return (
-    <section className={`py-10 px-6 text-white`} style={{ backgroundColor }}>
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-6">
-        <h2 className="text-2xl font-bold max-w-md leading-tight">
+    <section className="py-10 px-6 text-white w-[70%] mx-auto justify-center items-center rounded-4xl relative z-50 translate-y-20" style={{ backgroundColor }}>
+      <div className="flex flex-col md:flex-row justify-center w-full items-center">
+        {/* Green section takes 1/2 */}
+        <h2 className="text-6xl flex-1 font-bold leading-tight">
           {heading}
         </h2>
-        <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 w-full md:w-auto">
-        <input
-          type="email"
-          placeholder={placeholderText}
-          className="px-4 py-2 rounded-md text-black bg-white w-full md:w-72"
-        />
 
-          <button className="bg-white text-black font-semibold px-4 py-2 rounded-md hover:bg-gray-200">
-            {buttonLabel}
-          </button>
+        {/* Blue section takes the other 1/2 */}
+        <div className="flex flex-col  gap-3 items-center space-y-2 flex-1">
+          <div className='w-full md:w-2/3'>
+          <CustomInput placeholder={placeholderText} style="" icon="/images/email.png" />
+          <ButtonCustom title={buttonLabel} href='/' theme='light'/></div>
         </div>
       </div>
     </section>
+
   );
 };
 

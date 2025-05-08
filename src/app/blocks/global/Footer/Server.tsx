@@ -11,12 +11,12 @@ export default async function Footer() {
 
   return (
     <footer className="bg-[#F0F0F0] pt-16 px-6">
-      <div className="max-w-6xl mx-auto space-y-12">
+      <div className="w-full px-40 mx-auto space-y-12">
 
         {/* Top Section */}
-        <div className="grid md:grid-cols-5 gap-8">
+        <div className="mt-20 flex flex-row justify-between">
           {/* Logo + Description + Socials */}
-          <div className="space-y-4 col-span-2">
+          <div className="  space-y-10 mr-10 col-span-2">
             <div className='w-full'>
               
             </div>
@@ -48,9 +48,9 @@ export default async function Footer() {
 
           {/* Link Sections */}
           {footer.linkSections?.map((section, i) => (
-            <div key={i}>
-              <h4 className="font-semibold mb-2">{section.heading}</h4>
-              <ul className="space-y-2 text-sm text-gray-700">
+            <div key={i} className='mt-10 text-[16px]'>
+              <h4 className="font-semibold mb-5 tracking-wider">{section.heading}</h4>
+              <ul className="space-y-7 text-gray-700">
                 {section.links.map((link, j) => (
                   <li key={j}>
                     <Link href={link.url||'/'}>{link.label}</Link>

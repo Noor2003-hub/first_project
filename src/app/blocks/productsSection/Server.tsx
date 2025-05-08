@@ -19,8 +19,9 @@ export default function ProductsSectionServer({ title,products }) {
   </div>
 
 
-  <div className="flex justify-center mb-20">
-    <ButtonCustom title="View All" href="/" theme="light" />
+  <div className="flex justify-center mb-20 w-full">
+    <div className= " w-3/4 md:w-1/9">
+    <ButtonCustom title="View All" href="/" theme="light" /></div>
   </div>
 </section>
   );

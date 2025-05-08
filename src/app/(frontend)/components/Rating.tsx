@@ -40,7 +40,7 @@ export default function Rating({ rate = 0, size = "md",haveText=true }) {
   
     return (
         <div className="flex flex-row gap-3">
-      <div className={`rating rating-${size} gap-5 pointer-events-none`}>
+      <div className={`rating rating-${size} gap-3 pointer-events-none`}>
         {stars}
       </div>
       {haveText&& <p>{rate}/<span className="text-gray-600">5</span></p>}

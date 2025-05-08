@@ -1,4 +1,3 @@
-// components/blocks/topBrands/Server.tsx
 import Image from 'next/image';
 import React from 'react';
 
@@ -16,7 +15,8 @@ const TopBrandsServer: React.FC<TopBrandsProps> = ({ topBrands }) => {
   if (!topBrands || topBrands.length === 0) return null;
 
   return (
-    <div className="bg-black flex flex-wrap justify-center items-center sm:justify-start gap-4">
+    <div className="bg-black">
+      <div className="mx-auto flex flex-wrap justify-center items-center gap-7">
       {topBrands.map((brand) => (
         <div key={brand.name} className="w-30 mx-3 h-30 justify-center items-center relative sm:mx-20 sm:h-50 sm:w-50">
           <Image
@@ -27,8 +27,8 @@ const TopBrandsServer: React.FC<TopBrandsProps> = ({ topBrands }) => {
           />
         </div>
       ))}
+      </div>
     </div>
-
   );
 };
 
