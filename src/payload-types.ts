@@ -7,17 +7,6 @@
  */
 
 /**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Meta".
- */
-export type Meta =
-  | {
-      title: string;
-      description: string;
-      id?: string | null;
-    }[]
-  | null;
-/**
  * Supported timezones in IANA format.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -82,7 +71,6 @@ export interface Config {
     users: User;
     media: Media;
     pages: Page;
-    'example-collection': ExampleCollection;
     products: Product;
     orders: Order;
     categories: Category;
@@ -104,7 +92,6 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
-    'example-collection': ExampleCollectionSelect<false> | ExampleCollectionSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
@@ -477,48 +464,6 @@ export interface Customer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "example-collection".
- */
-export interface ExampleCollection {
-  id: string;
-  backgroundImage: string | Media;
-  purchase?:
-    | ({
-        relationTo: 'users';
-        value: string | User;
-      } | null)
-    | ({
-        relationTo: 'pages';
-        value: string | Page;
-      } | null);
-  title: string;
-  someTextField: string;
-  color?: ('mint' | 'dark_gray') | null;
-  age: number;
-  pageMeta?: Meta;
-  contact: string;
-  dateOnly?: string | null;
-  timeOnly?: string | null;
-  monthOnly?: string | null;
-  trackingCode: string;
-  enableCoolStuff?: boolean | null;
-  layout?: QuoteBlock[] | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "QuoteBlock".
- */
-export interface QuoteBlock {
-  quoteHeader: string;
-  quoteText?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'Quote';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "orders".
  */
 export interface Order {
@@ -564,10 +509,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: string | Page;
-      } | null)
-    | ({
-        relationTo: 'example-collection';
-        value: string | ExampleCollection;
       } | null)
     | ({
         relationTo: 'products';
@@ -793,51 +734,6 @@ export interface PagesSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "example-collection_select".
- */
-export interface ExampleCollectionSelect<T extends boolean = true> {
-  backgroundImage?: T;
-  purchase?: T;
-  title?: T;
-  someTextField?: T;
-  color?: T;
-  age?: T;
-  pageMeta?: T | MetaSelect<T>;
-  contact?: T;
-  dateOnly?: T;
-  timeOnly?: T;
-  monthOnly?: T;
-  trackingCode?: T;
-  enableCoolStuff?: T;
-  layout?:
-    | T
-    | {
-        Quote?: T | QuoteBlockSelect<T>;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Meta_select".
- */
-export interface MetaSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  id?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "QuoteBlock_select".
- */
-export interface QuoteBlockSelect<T extends boolean = true> {
-  quoteHeader?: T;
-  quoteText?: T;
-  id?: T;
-  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
