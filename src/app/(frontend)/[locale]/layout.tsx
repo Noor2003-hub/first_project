@@ -13,9 +13,9 @@ export default async function LocaleLayout({
   params: { locale: string };
 }) {
   const { locale } = params;
-
+  const dir = locale === 'ar' ? 'rtl' : 'ltr'
   return (
-    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    <html lang={locale} dir={dir}>
       <body>
         <HeaderServer lang={locale} />
         <main>{children}</main>

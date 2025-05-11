@@ -35,5 +35,5 @@ export default async function Page({
     return notFound()
   }
 
-  return <RenderBlocks blocks={page.sections} />
+  return <RenderBlocks blocks={page.sections} locale={locale} />
 }

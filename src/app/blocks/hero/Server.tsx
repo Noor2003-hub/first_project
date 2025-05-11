@@ -23,15 +23,21 @@ interface HeroProps {
   link?: string;  
 }
 
-const HeroServer: React.FC<HeroProps> = ({ layouts, records, label, link }) => {
+const HeroServer: React.FC<HeroProps & { locale?: string }> = ({ layouts, records, label, link, locale }) => {
   const richText = layouts.find((l) => l.blockType === 'richText')?.content?.root?.children || [];
   const image = layouts.find((l) => l.blockType === 'image')?.img;
 
   return (
 <section className="bg-[#F2F0F1] px-10 md:px-40">
-  <div className="flex flex-col  md:flex-row items-stretch justify-between gap-12">
+  <div 
+  className="flex flex-col  md:flex-row items-stretch justify-between gap-12"
+  >
     {/* LEFT SIDE */}
-    <div className="w-full  pb-10 md:w-1/2 space-y-5 text-center md:text-left h-full min-h-[400px] md:min-h-[500px] flex flex-col justify-between">
+    <div 
+      className={`w-full pb-10 md:w-1/2 space-y-5 ${
+        locale === 'ar' ? 'text-right' : 'text-left'
+      } h-full min-h-[400px] md:min-h-[500px] flex flex-col justify-between`}
+      >
       <div className="space-y-5">
         {richText.map((block, idx) => {
           const text = block.children?.map((c) => c.text).join(' ');

@@ -10,8 +10,8 @@ export default function LanguageSwitcher() {
   const currentLocale = segments[1] === 'ar' ? 'ar' : 'en'
   const newLocale = currentLocale === 'en' ? 'ar' : 'en'
 
-  // Replace the locale in the pathname
-  const newPath = ['/', newLocale, ...segments.slice(2)].join('/')
+  // Construct the new path without the origin
+  const newPath = ['', newLocale, ...segments.slice(2)].join('/') || '/'
 
   return (
     <div className="flex gap-4">
