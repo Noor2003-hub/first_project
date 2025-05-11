@@ -13,9 +13,8 @@ type Props = {
   comments: Comment[]
 }
 
-const CommentsSectionServer: React.FC<Props> = ({ title, comments }) => {
+const CommentsSectionServer: React.FC<Props  & { locale?: string }> = ({ title, comments,locale }) => {
   const scrollRef = useRef<HTMLDivElement>(null)
-
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
       const scrollAmount = 400
@@ -31,9 +30,19 @@ const CommentsSectionServer: React.FC<Props> = ({ title, comments }) => {
       <div className='flex flex-row justify-between px-40 py-10'>
         <h2 className="text-5xl font-extrabold text-center mb-8">{title}</h2>
         <div className="flex items-center justify-center gap-4 mb-4">
-          <button onClick={() => scroll('left')} className="text-5xl">←</button>
-          <button onClick={() => scroll('right')} className="text-5xl">→</button>
-        </div>
+  {locale === 'ar' ? (
+    <>
+      <button onClick={() => scroll('right')} className="text-5xl">→</button>
+      <button onClick={() => scroll('left')} className="text-5xl">←</button>
+    </>
+  ) : (
+    <>
+      <button onClick={() => scroll('left')} className="text-5xl">←</button>
+      <button onClick={() => scroll('right')} className="text-5xl">→</button>
+    </>
+  )}
+</div>
+
       </div>
 
       
