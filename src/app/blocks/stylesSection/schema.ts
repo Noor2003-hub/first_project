@@ -1,8 +1,12 @@
 import {Block} from "payload";
-
+const localizeFields = (fields) =>
+    fields.map((field) => ({
+      ...field,
+      localized: true
+    }));
 export const StylesSection: Block={
     slug:'stylesSection',
-    fields:[
+    fields:localizeFields([
         {
             name:'title',
             type:'text'
@@ -14,5 +18,5 @@ export const StylesSection: Block={
             hasMany:true
         }
       
-    ]
+    ])
 }

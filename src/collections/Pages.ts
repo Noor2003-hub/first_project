@@ -10,17 +10,24 @@ import { CommentsSection } from '@/app/blocks/commentsSection/schema';
 import { Newsletter } from '@/app/blocks/newsletter/schema';
 import { TopBrands } from '@/app/blocks/topBrands/schema';
 
+const localizeFields = (fields) =>
+  fields.map((field) => ({
+    ...field,
+    localized: true
+  }));
+
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
     useAsTitle: 'name',
   },
-  fields: [
+  fields:[
         {
             name:'name',
             type:'text',
             label:'Name',
             required:true,
+            localized: true,
         },
         {
             name:'slug',
@@ -32,9 +39,7 @@ export const Pages: CollectionConfig = {
             },
             required:true
         },
-        
-        
-        
+
           {
             name:'sections',
             type:'blocks',

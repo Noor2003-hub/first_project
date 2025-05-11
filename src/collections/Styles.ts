@@ -7,7 +7,8 @@ export const Styles: CollectionConfig = {
   fields: [
   {
     name:'name',
-    type:'text'
+    type:'text',
+    localized:true
   },
   {
     name:'cover',

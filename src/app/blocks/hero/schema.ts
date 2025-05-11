@@ -2,12 +2,14 @@ import {Block} from "payload";
 import { Cover } from "../cover/schema";
 import { Image } from "../image/schema";
 import { RichText } from "../richText/schema";
+
 export const Hero: Block={
     slug:'hero',
-    fields:[
+    fields: [
         {
             name:'layouts',
             type:'blocks',
+            
             blocks:[RichText,
                 Image,
             ]
@@ -19,44 +21,31 @@ export const Hero: Block={
             {
                 name:'title',
                 type:'text',
+                localized: true
+
 
             },
             {
                 name:'record',
-                type:'number'
+                type:'number',
+                localized: true
+
             }
             ]
         },
+        {
+            name:'label',
+            label:'Button Label',
+            type:'text',
+            localized:true
+        },
+        {
+            name:'link',
+            label:'Buton Link',
+            type:'text'
+        }
 
-    //     {
-    //         name:'content',
-    //         label:'Content',
-    //         type:'richText',
-    //         required:true
-    //     },
-    //     {
-    //         name:'img',
-    //         label:'Iamge',
-    //         type:'upload',
-    //         relationTo:'media',
-    //         required:true
-    //     },
-    //     {
-    //               name:'records',
-    //               type:'array',
-    //               fields:[
-    //                 {
-    //                   name:'title',
-    //                   type:'text',
-        
-    //                 },
-    //                 {
-    //                   name:'record',
-    //                   type:'number'
-    //                 }
-    //               ]
-    //             },
-   
+
 
     ]
 }

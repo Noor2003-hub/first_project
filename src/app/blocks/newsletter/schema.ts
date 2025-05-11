@@ -3,22 +3,25 @@ import { Block } from 'payload'
 
 export const Newsletter: Block = {
   slug: 'newsletter',
-  fields: [
+  fields:[
     {
       name: 'heading',
       type: 'text',
       required: true,
       defaultValue: 'STAY UPTO DATE ABOUT OUR LATEST OFFERS',
+      localized:true
     },
     {
       name: 'placeholderText',
       type: 'text',
       defaultValue: 'Enter your email address',
+      localized:true
     },
     {
       name: 'buttonLabel',
       type: 'text',
       defaultValue: 'Subscribe to Newsletter',
+      localized:true
     },
     {
       name: 'backgroundColor',
@@ -28,7 +31,7 @@ export const Newsletter: Block = {
         description: 'Tailwind class or HEX color',
       },
     },
-  ],
+  ]
 }
 
 

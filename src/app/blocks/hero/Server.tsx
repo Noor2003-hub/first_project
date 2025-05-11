@@ -19,9 +19,11 @@ interface HeroProps {
     title: string;
     record: number;
   }[];
+  label?: string; 
+  link?: string;  
 }
 
-const HeroServer: React.FC<HeroProps> = ({ layouts, records }) => {
+const HeroServer: React.FC<HeroProps> = ({ layouts, records, label, link }) => {
   const richText = layouts.find((l) => l.blockType === 'richText')?.content?.root?.children || [];
   const image = layouts.find((l) => l.blockType === 'image')?.img;
 
@@ -57,8 +59,12 @@ const HeroServer: React.FC<HeroProps> = ({ layouts, records }) => {
       </div>
 
       <div className="w-full md:w-1/4">
-        <ButtonCustom title="Shop Now" href="/shop" theme="dark" />
-      </div>
+            <ButtonCustom 
+              title={label} 
+              href={link}  
+              theme="dark" 
+            />
+          </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 sm:flex sm:flex-row mt-8">

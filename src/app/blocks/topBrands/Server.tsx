@@ -16,9 +16,9 @@ const TopBrandsServer: React.FC<TopBrandsProps> = ({ topBrands }) => {
 
   return (
     <div className="bg-black">
-      <div className="mx-auto flex flex-wrap justify-center items-center gap-7">
+      <div className=" flex flex-wrap justify-center items-center gap-1">
       {topBrands.map((brand) => (
-        <div key={brand.name} className="w-30 mx-3 h-30 justify-center items-center relative sm:mx-20 sm:h-50 sm:w-50">
+        <div key={brand.name} className="w-20 mx-1 h-20 justify-center items-center relative sm:mx-20 sm:h-50 sm:w-50">
           <Image
             src={brand.logo.url}
             alt={brand.logo.alt}

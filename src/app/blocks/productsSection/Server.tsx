@@ -3,7 +3,7 @@ import Card from '@/app/(frontend)/components/Card';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function ProductsSectionServer({ title,products }) {
+export default function ProductsSectionServer({ title,products,label,link }) {
   return (
 <section className="space-y-4">
   <h2 className="text-5xl py-20 font-extrabold text-center mb-8">{title}</h2>
@@ -21,7 +21,7 @@ export default function ProductsSectionServer({ title,products }) {
 
   <div className="flex justify-center mb-20 w-full">
     <div className= " w-3/4 md:w-1/9">
-    <ButtonCustom title="View All" href="/" theme="light" /></div>
+    <ButtonCustom title={label} href={link} theme="light" /></div>
   </div>
 </section>
   );

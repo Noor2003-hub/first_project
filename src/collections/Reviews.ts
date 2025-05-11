@@ -29,6 +29,7 @@ export const Reviews: CollectionConfig = {
       name: 'comment',
       type: 'textarea',
       required: true,
+      localized:true
     },
     {
       name: 'postedDate',

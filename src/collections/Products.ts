@@ -11,6 +11,7 @@ export const Products: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      localized:true
     },
     {
         name:'Description',
@@ -21,12 +22,7 @@ export const Products: CollectionConfig = {
         type:'relationship',
         relationTo:'brands'
     },
-    // {
-    //     name: 'category',
-    //     type: 'relationship',
-    //     relationTo: 'categories',
-    //     required: true,
-    //   },
+    
       {
         name: 'category',
         type: 'relationship',
@@ -40,15 +36,7 @@ export const Products: CollectionConfig = {
               },
             };
           }
-        // filterOptions: ({ siblingData }) => {
-        // console.log('sibling=',siblingData)
-        // if (!siblingData?.category) return true; //show all if no category selected
-        // return {
-        //     category: {
-        //     contains: siblingData.category, //filters only subcategories within selected category
-        //     },
-        // };
-        // },
+        
         
       }
       ,
@@ -64,13 +52,7 @@ export const Products: CollectionConfig = {
       type: 'number',
       required: true,
     },
-    // {
-    //     name: 'styles',
-    //     type: 'relationship',
-    //     relationTo:'styles',
-    //     hasMany:true,
-    //     required: true,
-    //   },
+    
     
     {
       name: 'onsale',
@@ -106,20 +88,6 @@ export const Products: CollectionConfig = {
     },
     
     
-    // {
-    //     name: 'availableSizes',
-    //     label: 'Available Sizes',
-    //     type:'relationship',
-    //     relationTo:'sizes',
-    //     hasMany:true
-    //   },
-    // {
-    //     name: 'availableColors',
-    //     label: 'Available Colors',
-    //     type:'relationship',
-    //     relationTo:'colors',
-    //     hasMany:true
-    //   },
     {
         name: 'attributes',
         label: 'Product Attributes',

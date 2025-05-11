@@ -132,7 +132,7 @@ export interface Config {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
-  locale: null;
+  locale: 'en' | 'ar';
   user:
     | (User & {
         collection: 'users';
@@ -267,6 +267,8 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            label?: string | null;
+            link?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero';
@@ -274,6 +276,8 @@ export interface Page {
         | {
             title?: string | null;
             products?: (string | Product)[] | null;
+            label?: string | null;
+            link?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'productsSection';
@@ -738,6 +742,8 @@ export interface PagesSelect<T extends boolean = true> {
                     record?: T;
                     id?: T;
                   };
+              label?: T;
+              link?: T;
               id?: T;
               blockName?: T;
             };
@@ -746,6 +752,8 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               title?: T;
               products?: T;
+              label?: T;
+              link?: T;
               id?: T;
               blockName?: T;
             };

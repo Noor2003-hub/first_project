@@ -5,7 +5,8 @@ export const CommentsSection: Block={
     fields:[
         {
             name:'title',
-            type:'text'
+            type:'text',
+            localized:true
         },
         {
             name:'comments',
