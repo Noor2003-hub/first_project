@@ -960,6 +960,7 @@ export interface Header {
         id?: string | null;
       }[]
     | null;
+  searchPropmt?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1025,6 +1026,7 @@ export interface HeaderSelect<T extends boolean = true> {
         link?: T;
         id?: T;
       };
+  searchPropmt?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

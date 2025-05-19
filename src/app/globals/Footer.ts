@@ -19,6 +19,7 @@ export const Footer: GlobalConfig={
           name: 'description',
           type: 'textarea',
           defaultValue: 'We have clothes that suits your style and which you’re proud to wear. From women to men.',
+          localized:true
         },
         {
           name: 'socialLinks',
@@ -41,12 +42,12 @@ export const Footer: GlobalConfig={
       name: 'linkSections',
       type: 'array',
       fields: [
-        { name: 'heading', type: 'text' }, // e.g., Company, Help, FAQ, etc.
+        { name: 'heading', type: 'text',localized:true }, // e.g., Company, Help, FAQ, etc.
         {
           name: 'links',
           type: 'array',
           fields: [
-            { name: 'label', type: 'text' },
+            { name: 'label', type: 'text',localized:true },
             { name: 'url', type: 'text' },
           ],
         },
@@ -56,6 +57,7 @@ export const Footer: GlobalConfig={
       name: 'bottomNote',
       type: 'text',
       defaultValue: 'Shop.co © 2000–2023, All Rights Reserved',
+      localized:true
     },
     {
       name: 'paymentIcons',

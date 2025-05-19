@@ -21,6 +21,7 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
   },
+  
   fields:[
         {
             name:'name',

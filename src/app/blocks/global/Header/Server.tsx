@@ -6,9 +6,12 @@ import Link from 'next/link';
 import CustomInput from '@/app/(frontend)/components/CustomInput';
 import LanguageSwitcher from '@/app/(frontend)/components/LanguageSwitcher';
 
-export default async function HeaderServer() {
+export default async function HeaderServer({ lang }: { lang: string }) {
   const payload = await getPayload({ config });
-  const header = await payload.findGlobal({ slug: 'header' });
+  const header = await payload.findGlobal({
+    slug: 'header',
+    locale: lang, // <-- important
+  });
 
   return (
     <>

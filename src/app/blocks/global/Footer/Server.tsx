@@ -5,9 +5,12 @@ import { getPayload } from 'payload';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default async function Footer() {
+export default async function Footer({ lang }: { lang: string }) {
   const payload = await getPayload({ config });
-  const footer = await payload.findGlobal({ slug: 'footer' });
+  const footer = await payload.findGlobal({
+    slug: 'footer',
+    locale: lang, // <-- important
+  });
 
   return (
     <footer className="bg-[#F0F0F0] pt-16 px-6">

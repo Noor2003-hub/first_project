@@ -17,12 +17,14 @@ export const Header: GlobalConfig={
             {
                 name:'label',
                 label:'Label',
-                type:'text'
+                type:'text',
+                localized:true
             },
             {
                 name:'link',
                 label:'Link',
-                type:'text'
+                type:'text',
+                localized:true
             }
             ],
             required:true
@@ -44,6 +46,11 @@ export const Header: GlobalConfig={
                     label:'Link',
                     type:'text'
                 },
-            ]}
+            ]},
+            {
+                name:'searchPropmt',
+                type:'text',
+                localized:true
+            }
     ]
 }
